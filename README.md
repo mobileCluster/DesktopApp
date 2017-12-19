@@ -1,1 +1,1 @@
-# RHM_GUI
+# Remote Health Monitoring - Desktop Application
