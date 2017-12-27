@@ -120,7 +120,7 @@ class RHM(QWidget):
         self.plot = []
         self.stat = []
 
-        for i in range(8):
+        for i in range(12):
             self.plot.append(0)
 
             self.out.append([])
@@ -140,19 +140,27 @@ class RHM(QWidget):
         self.plot[0] = pg.PlotWidget(title="CPU USAGE")
         self.grid.addWidget(self.plot[0], 4,1,2,1)
         self.plot[2] = pg.PlotWidget(title="CPU USAGE")
-        self.grid.addWidget(self.plot[2], 4,2,2,1)
+        self.grid.addWidget(self.plot[3], 4,2,2,1)
         self.plot[4] = pg.PlotWidget(title="CPU USAGE")
-        self.grid.addWidget(self.plot[4], 4,3,2,1)
+        self.grid.addWidget(self.plot[6], 4,3,2,1)
         self.plot[6] = pg.PlotWidget(title="CPU USAGE")
-        self.grid.addWidget(self.plot[6], 4,4,2,1)
+        self.grid.addWidget(self.plot[9], 4,4,2,1)
         self.plot[1] = pg.PlotWidget(title="MEMORY USAGE")
         self.grid.addWidget(self.plot[1], 6,1,2,1)
         self.plot[3] = pg.PlotWidget(title="MEMORY USAGE")
-        self.grid.addWidget(self.plot[3], 6,2,2,1)
+        self.grid.addWidget(self.plot[4], 6,2,2,1)
         self.plot[5] = pg.PlotWidget(title="MEMORY USAGE")
-        self.grid.addWidget(self.plot[5], 6,3,2,1)
+        self.grid.addWidget(self.plot[7], 6,3,2,1)
         self.plot[7] = pg.PlotWidget(title="MEMORY USAGE")
-        self.grid.addWidget(self.plot[7], 6,4,2,1)
+        self.grid.addWidget(self.plot[10], 6,4,2,1)
+	self.plot[1] = pg.PlotWidget(title="BANDWIDTH USAGE")
+        self.grid.addWidget(self.plot[2], 6,1,2,1)
+        self.plot[3] = pg.PlotWidget(title="BANDWIDTH USAGE")
+        self.grid.addWidget(self.plot[5], 6,2,2,1)
+        self.plot[5] = pg.PlotWidget(title="BANDWIDTH USAGE")
+        self.grid.addWidget(self.plot[8], 6,3,2,1)
+        self.plot[7] = pg.PlotWidget(title="BANDWIDTH USAGE")
+        self.grid.addWidget(self.plot[11], 6,4,2,1)
 
         self.threadUpdate = ThreadUpdate()
         self.connect(self.threadUpdate, SIGNAL("update()"), self.update)
