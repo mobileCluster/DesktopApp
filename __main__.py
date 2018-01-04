@@ -46,7 +46,7 @@ class RHM(QWidget):
 
 
         # self.setWindowFlags(Qt.FramelessWindowHint)
-        # -self.setAttribute(Qt.WA_TranslucentBackground)
+        # self.setAttribute(Qt.WA_TranslucentBackground)
     
         font1 = QFont()
         font1.setPointSize(30)
@@ -90,7 +90,7 @@ class RHM(QWidget):
         self.thread = Thread1()
         self.connect(self.thread, SIGNAL("interface1()"), self.interface1)
         self.thread.start()
-		
+        
         
         self.show()
 
@@ -139,28 +139,28 @@ class RHM(QWidget):
         
         self.plot[0] = pg.PlotWidget(title="CPU USAGE")
         self.grid.addWidget(self.plot[0], 4,1,2,1)
-        self.plot[2] = pg.PlotWidget(title="CPU USAGE")
+        self.plot[3] = pg.PlotWidget(title="CPU USAGE")
         self.grid.addWidget(self.plot[3], 4,2,2,1)
-        self.plot[4] = pg.PlotWidget(title="CPU USAGE")
-        self.grid.addWidget(self.plot[6], 4,3,2,1)
         self.plot[6] = pg.PlotWidget(title="CPU USAGE")
+        self.grid.addWidget(self.plot[6], 4,3,2,1)
+        self.plot[9] = pg.PlotWidget(title="CPU USAGE")
         self.grid.addWidget(self.plot[9], 4,4,2,1)
         self.plot[1] = pg.PlotWidget(title="MEMORY USAGE")
         self.grid.addWidget(self.plot[1], 6,1,2,1)
-        self.plot[3] = pg.PlotWidget(title="MEMORY USAGE")
+        self.plot[4] = pg.PlotWidget(title="MEMORY USAGE")
         self.grid.addWidget(self.plot[4], 6,2,2,1)
-        self.plot[5] = pg.PlotWidget(title="MEMORY USAGE")
-        self.grid.addWidget(self.plot[7], 6,3,2,1)
         self.plot[7] = pg.PlotWidget(title="MEMORY USAGE")
+        self.grid.addWidget(self.plot[7], 6,3,2,1)
+        self.plot[10] = pg.PlotWidget(title="MEMORY USAGE")
         self.grid.addWidget(self.plot[10], 6,4,2,1)
-	self.plot[1] = pg.PlotWidget(title="BANDWIDTH USAGE")
-        self.grid.addWidget(self.plot[2], 6,1,2,1)
-        self.plot[3] = pg.PlotWidget(title="BANDWIDTH USAGE")
-        self.grid.addWidget(self.plot[5], 6,2,2,1)
+        self.plot[2] = pg.PlotWidget(title="BANDWIDTH USAGE")
+        self.grid.addWidget(self.plot[2], 8,1,2,1)
         self.plot[5] = pg.PlotWidget(title="BANDWIDTH USAGE")
-        self.grid.addWidget(self.plot[8], 6,3,2,1)
-        self.plot[7] = pg.PlotWidget(title="BANDWIDTH USAGE")
-        self.grid.addWidget(self.plot[11], 6,4,2,1)
+        self.grid.addWidget(self.plot[5], 8,2,2,1)
+        self.plot[8] = pg.PlotWidget(title="BANDWIDTH USAGE")
+        self.grid.addWidget(self.plot[8], 8,3,2,1)
+        self.plot[11] = pg.PlotWidget(title="BANDWIDTH USAGE")
+        self.grid.addWidget(self.plot[11], 8,4,2,1)
 
         self.threadUpdate = ThreadUpdate()
         self.connect(self.threadUpdate, SIGNAL("update()"), self.update)
@@ -172,21 +172,23 @@ class RHM(QWidget):
         global my_global
         for i in range(4):
             if my_global['data'][i]['status']=='online':
-                self.out[2*i].append(my_global['data'][i]['cpu'])
-                self.out[2*i+1].append(my_global['data'][i]['memory'])
-                self.stat[i].setStyleSheet("text-align:center;color:white;background:transparent;")
-                self.stat[i].setText(str(my_global['data'][i]['name']))
-                self.stat[i].setAlignment(Qt.AlignCenter)
-        for i in range(8):
+                self.out[3*i].append(my_global['data'][i]['cpu'])
+                self.out[3*i+1].append(my_global['data'][i]['memory'])
+                self.out[3*i+1].append(my_global['data'][i]['Bandwidth'])
+                if int(my_global['data'][i]['battery'])>5:
+                    self.stat[i].setStyleSheet("text-align:center;color:white;background:transparent;")
+                    self.stat[i].setText(str(my_global['data'][i]['name'])+"\nBattery : "+str(my_global['data'][i]['battery'])+"%")
+                    self.stat[i].setAlignment(Qt.AlignCenter)
+                else:
+                    self.stat[i].setStyleSheet("text-align:center;color:white;background:transparent;")
+                    self.stat[i].setText(str(my_global['data'][i]['name'])+"\nBattery : Low")
+                    self.stat[i].setAlignment(Qt.AlignCenter)
+        for i in range(12):
             if len(self.out[i])>40:
                 self.out[i].pop(0)
             self.plot[i].clear()
             self.plot[i].setXRange(0,40, padding=0)
             self.plot[i].plot(self.out[i])
-            """if len(self.data[i])<40:
-                self.plot[i].setXRange(0,40, padding=0)
-            else:
-                self.plot[i].setXRange(len(self.data[i])-40,len(self.data[i]), padding=0)"""
 
 def main():
     app = QApplication(sys.argv)
