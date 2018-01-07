@@ -170,19 +170,18 @@ class RHM(QWidget):
 
     def update(self):
         global my_global
-        for i in range(4):
-            if my_global['data'][i]['status']=='online':
-                self.out[3*i].append(my_global['data'][i]['cpu'])
-                self.out[3*i+1].append(my_global['data'][i]['memory'])
-                self.out[3*i+1].append(my_global['data'][i]['Bandwidth'])
-                if int(my_global['data'][i]['battery'])>5:
-                    self.stat[i].setStyleSheet("text-align:center;color:white;background:transparent;")
-                    self.stat[i].setText(str(my_global['data'][i]['name'])+"\nBattery : "+str(my_global['data'][i]['battery'])+"%")
-                    self.stat[i].setAlignment(Qt.AlignCenter)
-                else:
-                    self.stat[i].setStyleSheet("text-align:center;color:white;background:transparent;")
-                    self.stat[i].setText(str(my_global['data'][i]['name'])+"\nBattery : Low")
-                    self.stat[i].setAlignment(Qt.AlignCenter)
+        for i in range(len(my_global['data'])):
+            self.out[3*i].append(my_global['data'][i]['cpu'])
+            self.out[3*i+1].append(my_global['data'][i]['memory'])
+            self.out[3*i+2].append(my_global['data'][i]['Bandwidth'])
+            if int(my_global['data'][i]['battery'])>5:
+                self.stat[i].setStyleSheet("text-align:center;color:white;background:transparent;")
+                self.stat[i].setText(str(my_global['data'][i]['name'])+"\nBattery : "+str(my_global['data'][i]['battery'])+"%")
+                self.stat[i].setAlignment(Qt.AlignCenter)
+            else:
+                self.stat[i].setStyleSheet("text-align:center;color:white;background:transparent;")
+                self.stat[i].setText(str(my_global['data'][i]['name'])+"\nBattery : Low")
+                self.stat[i].setAlignment(Qt.AlignCenter)
         for i in range(12):
             if len(self.out[i])>40:
                 self.out[i].pop(0)
